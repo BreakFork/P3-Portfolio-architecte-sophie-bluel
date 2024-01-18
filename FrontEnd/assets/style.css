@@ -2,79 +2,136 @@
 @import './css-partials/reset.css';
 
 body {
-	max-width: 1140px;
-	margin:auto;
-	font-family: 'Work Sans' ;
-	font-size: 14px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--app-primary-font-clr);
+	font-family: var(--app-primary-font);
+	font-size: var(--app-font-size-3);
+	background-color: var(--app-body-bkg-clr);
+	/* background-color: blue; */
 }
-header {
+.main-wrapper {
+	width: 100%;
+	max-width: 1140px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	padding: 50px 120px 0px 120px;
+	/* background-color: grey; */
+}
+
+.main-wrapper-edition-mode {
+	position: absolute;
+	top: 59px;
+}
+
+.header-container {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin-bottom: 95px;
+	/* background-color: orange; */
 }
+
+.main-container {
+	padding-inline: 50px; 
+	/* background-color: olive; */
+}
+
 section {
-	margin: 50px 0
+	width: 100%;
 }
 
 h1{
 	display: flex;
 	flex-direction: column;
-	font-family: 'Syne';
-	font-size: 22px;
-	font-weight: 800;
-	color: #B1663C
+	font-family: var(--app-secondary-font);
+	font-size: var(--app-font-size-6);
+	font-weight: var(--app-font-weight-3);
+	color: var(--app-theme-primary-clr);
 }
 
 h1 > span {
-	font-family: 'Work Sans';
-	font-size:10px;
+	font-family: var(--app-primary-font);
+	font-size: var(--app-font-size-1);
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
-	font-family: 'Syne';
-	font-weight: 700;
-	font-size: 30px;
-	color: #1D6154
+	font-family: var(--app-secondary-font);
+	font-weight: var(--app-font-weight-2);
+	font-size: var(--app-font-size-7);
+	color: var(--app-theme-secondary-clr);
+
 }
-nav ul {
+/* ____________________________________________ */
+/* NAVBAR */
+.navbar {
+	display: flex;
+}
+
+.navbar ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
-nav li {
+
+.navbar li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	color: var(--app-dark-font-clr);
 }
 
-li:hover {
-	color: #B1663C;
+.navbar a:hover, .footer-container a:hover {
+	color: var(--app-theme-primary-clr);
+	cursor: pointer;
 }
+.navbar svg:hover {
+	stroke: var(--app-theme-primary-clr);
+}
+/* ____________________________________________ */
+/* SECTION INTRODUCTION */
 #introduction {
 	display: flex;
 	align-items: center;
+	gap: 72px;
+	margin-bottom: 139px;
+	/* background-color: tan; */
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
 #introduction img {
-	display: block;
 	margin: auto;
-	width: 80%;
+	height: 320px;
+	width: 400px;
+	object-fit: cover;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
 
 #introduction p {
+	text-align: justify;
+	text-justify: inter-word;
+	line-height: 16.42px;
 	margin-bottom: 0.5em;
 }
+/* ____________________________________________ */
+/* SECTION PORTFOLIO 
+-> portfolio-title-bar
+-> filters-container
+-> gallery-container
+-> modal-container
+*/
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -91,52 +148,114 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
-	width: 50%;
-margin: auto;
+/* ____________________________________________ */
+/* SECTION CONTACT (FORM) AND LOGIN FORM */
+
+#contact, .login-container {
+	width: 379px;
+	margin: auto;
 }
+
 #contact > * {
 	text-align: center;
-
 }
-#contact h2{
+
+#contact h2 {
 	margin-bottom: 20px;
 }
+
+#contact p {
+	font-size: var(--app-font-size-5);
+	color: var(--app-primary-font-clr);
+	font-weight: var(--app-font-weight-1);
+	margin-bottom: 38px;
+}
+
 #contact form {
 	text-align: left;
-	margin-top:30px;
+	font-size: var(--app-font-size-4);
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, .login-form input {
 	height: 50px;
-	font-size: 1.2em;
+	font-family: var(--app-primary-font);
+	font-size: var(--app-font-size-5);
+	padding-left: 13px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	
 }
-#contact label {
+
+#contact label, .login-form label {
+	height: 16px;
 	margin: 2em 0 1em 0;
+	font-size: var(--app-font-size-4);
+	font-weight: var(--app-font-weight-2);
 }
+
 #contact textarea {
+	font-family: var(--app-primary-font);
+	font-size: var(--app-font-size-5);
+	padding: 10px 13px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	
 }
 
-input[type="submit"]{
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin : 2em auto ;
-	width: 180px;
+#contact input[type="submit"], .login-form input[type="submit"] {
+	font-family: var(--app-secondary-font);
+	font-weight: var(--app-font-weight-1);
+	color: var(--app-secondery-font-clr);
 	text-align: center;
+	margin-inline: auto;
+	margin-top: 40px;
+	padding: 10px 58px;
 	border-radius: 60px ;
+	background-color: var(--app-theme-secondary-clr);
 }
 
-footer nav ul {
+#contact input[type="submit"]:hover, .login-form input[type="submit"]:hover {
+	background-color: var(--app-btn-hover-clr);
+	cursor: pointer;
+}
+
+
+
+
+/* ____________________________________________ */
+/* FOOTER */
+.footer-container {
+	width: 100%;
+	height: 60px;
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	align-items: center;
+	padding-right: 2em;
+	margin-top: 45px;
+	background-color: var(--app-secondery-font-clr);
+}
+
+.footer-container.login-position {
+	position: fixed;
+    bottom: 0;
+	padding-right: 107px;
+    width: 100%;
+}
+
+.forget-pwd-link {
+	margin-top: 37px;
+	text-align: center;
+	text-decoration: underline;
+	line-height: 16px;
+	font-size: var(--app-font-size-3);
+	font-weight: var(--app-font-weight-2);
+
+}
+
+.forget-pwd-link:hover {
+	color: var(--app-theme-primary-clr);
+	cursor: pointer;
 }
 
