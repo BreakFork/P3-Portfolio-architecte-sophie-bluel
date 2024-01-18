@@ -1,0 +1,30 @@
+:root {
+    /*-- FONTS --*/
+    --app-primary-font: 'Work Sans';
+    --app-secondary-font: 'Syne';
+
+    --app-font-size-1: 10px;
+    --app-font-size-2: 13px;
+    --app-font-size-3: 14px;
+    --app-font-size-4: 16px;
+    --app-font-size-5: 19px;
+    --app-font-size-6: 22px;
+    --app-font-size-7: 30px;
+
+    --app-font-weight-1: 400;
+    --app-font-weight-2: 500;
+    --app-font-weight-3: 700;
+    --app-font-weight-4: 800;
+    --app-font-weight-5: 900;
+
+    /*-- COLORS --*/
+    --app-primary-font-clr: #3D3D3D;
+    --app-secondery-font-clr: #FFFFFF;
+    --app-dark-font-clr: #000000;
+    --app-body-bkg-clr: #FFFEF8;
+    
+    --app-theme-primary-clr: #B1663C;
+    --app-theme-secondary-clr: #1D6154;
+
+    --app-btn-hover-clr: #0E2F28;
+}
