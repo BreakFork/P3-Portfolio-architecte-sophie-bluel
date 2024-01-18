@@ -1,4 +1,6 @@
+@import './css-partials/root.css';
 @import './css-partials/reset.css';
+
 body {
 	max-width: 1140px;
 	margin:auto;
