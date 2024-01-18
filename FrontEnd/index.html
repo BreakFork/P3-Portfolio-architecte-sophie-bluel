@@ -8,102 +8,73 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
-	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" type="text/css" href="./assets/style.css">	
 </head>
 <body>
-<header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-</header>
-<main>
-	<section id="introduction">
-		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
-		</figure>
-		<article>
-			<h2>Designer d'espace</h2>
-			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
-		</article>
-	</section>
-	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
-		</div>
-	</section>
-	<section id="contact">
-		<h2>Contact</h2>
-		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
-			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
-			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
-		</form>
-	</section>
-</main>
+	<div class="main-wrapper">
+		<header class="header-container">
+			<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+			<nav class="navbar">
+				<ul>
+					<li><a href="#projects">projets</a></li>
+					<li><a href="#contact">contact</a></li>
+					<li><a class="login" href="./login.html">login</a></li>
+					<li>
+						<a href="#">
+							<svg role="img" aria-label="Instagram" focusable="false" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M10.6772 5.71285C7.93168 5.71285 5.71717 7.92736 5.71717 10.6728C5.71717 13.4183 7.93168 15.6328 10.6772 15.6328C13.4226 15.6328 15.6371 13.4183 15.6371 10.6728C15.6371 7.92736 13.4226 5.71285 10.6772 5.71285ZM10.6772 13.8975C8.90296 13.8975 7.45252 12.4514 7.45252 10.6728C7.45252 8.89432 8.89864 7.4482 10.6772 7.4482C12.4557 7.4482 13.9018 8.89432 13.9018 10.6728C13.9018 12.4514 12.4514 13.8975 10.6772 13.8975ZM16.9969 5.50996C16.9969 6.15316 16.4789 6.66686 15.84 6.66686C15.1968 6.66686 14.6831 6.14885 14.6831 5.50996C14.6831 4.87108 15.2012 4.35306 15.84 4.35306C16.4789 4.35306 16.9969 4.87108 16.9969 5.50996ZM20.282 6.68413C20.2086 5.1344 19.8546 3.76166 18.7193 2.63067C17.5883 1.49967 16.2156 1.14569 14.6659 1.06799C13.0687 0.977337 8.28134 0.977337 6.68413 1.06799C5.13872 1.14137 3.76598 1.49535 2.63067 2.62635C1.49535 3.75735 1.14569 5.13009 1.06799 6.67981C0.977337 8.27702 0.977337 13.0643 1.06799 14.6616C1.14137 16.2113 1.49535 17.584 2.63067 18.715C3.76598 19.846 5.1344 20.2 6.68413 20.2777C8.28134 20.3683 13.0687 20.3683 14.6659 20.2777C16.2156 20.2043 17.5883 19.8503 18.7193 18.715C19.8503 17.584 20.2043 16.2113 20.282 14.6616C20.3727 13.0643 20.3727 8.28134 20.282 6.68413ZM18.2186 16.3753C17.8819 17.2214 17.23 17.8732 16.3796 18.2143C15.1062 18.7193 12.0844 18.6028 10.6772 18.6028C9.26989 18.6028 6.24382 18.715 4.97468 18.2143C4.12859 17.8776 3.47676 17.2257 3.13573 16.3753C2.63067 15.1019 2.74722 12.0801 2.74722 10.6728C2.74722 9.26557 2.63498 6.2395 3.13573 4.97037C3.47244 4.12427 4.12427 3.47244 4.97468 3.13141C6.24813 2.62635 9.26989 2.7429 10.6772 2.7429C12.0844 2.7429 15.1105 2.63067 16.3796 3.13141C17.2257 3.46812 17.8776 4.11996 18.2186 4.97037C18.7236 6.24382 18.6071 9.26557 18.6071 10.6728C18.6071 12.0801 18.7236 15.1062 18.2186 16.3753Z" fill="black"/>
+							</svg>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<main class="main-container">
+			<section id="introduction">
+				<figure>
+					<img src="./assets/images/sophie-bluel.png" alt="Photo de l'architecte Sophie Bluel">
+				</figure>
+				<article>
+					<h2>Designer d'espace</h2>
+					<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+					<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+					<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+				</article>
+			</section>
 
-<footer>
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-</footer>
+			<section id="portfolio" class="portfolio">
+
+				<div class="portfolio-header">
+					<h2 id="portfolio-header--title">Mes Projets</h2>
+				</div>
+
+				<div class="filters-container"></div>
+
+				<div class="gallery-container"></div>
+
+			</section>
+			<section id="contact">
+				<h2>Contact</h2> 
+				<p>Vous avez un projet ? Discutons-en !</p>
+				<form action="#" method="post">
+					<label for="name">Nom</label>
+					<input type="text" name="name" id="name">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email">
+					<label for="message">Message</label>
+					<textarea name="message" id="message" cols="30" rows="10"></textarea>
+					<input type="submit" value="Envoyer">
+				</form>
+			</section>
+		</main>
+
+		<footer class="footer-container">
+			<nav>
+				<ul>
+					<li><a href="#">Mentions Légales</a></li>
+				</ul>
+			</nav>
+		</footer>
+	</div><!--main-wrapper-->
 </body>
 </html>
