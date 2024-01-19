@@ -4,7 +4,7 @@ let data; //console.log(data)
 const gallery = document.querySelector(".gallery-container");
 
 /**
- * This function get the data from the API.
+ * This function gets the data from the API.
  * The resource argument allows us to obtain the targeted data type.
  * 
  * @param {String} resource the key word for the URL.
@@ -38,11 +38,9 @@ async function getData(resource) {
         console.error(error);
     } 
 };
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // GALLERY SYSTEM
-
 /**
  * This function builds each item of the gallery.
  * 
@@ -85,11 +83,9 @@ async function displayProjectsGallery() {
         elementBuilder(data[i].title, data[i].imageUrl);
     };
 };
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // FILTER SYSTEM
-
 /**
  * This function is called when we click on a filter button (eventListener).
  * It manages the CSS logic of the filter buttons and rebuilds the gallery 
@@ -177,7 +173,6 @@ async function ButtonFilterFactory() {
         });
     });                                                      
 }; 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * This function initializes the filter system.
