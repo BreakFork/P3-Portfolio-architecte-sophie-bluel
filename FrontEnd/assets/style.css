@@ -137,6 +137,40 @@ h2{
 	margin-bottom: 1em;
 }
 /* ----------------------------------- */
+.filters-container {
+	width: 100%;
+	margin-bottom: 45px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.btn-filter {
+	height: 37px;
+	min-width: 100px;
+	padding: 2px 11px 2px 11px;
+	text-align: center;
+	font-family: var(--app-secondary-font);
+	font-size: var(--app-font-size-4);
+	line-height: 19.2px;
+	font-weight: var(--app-font-weight-3);
+	color: var(--app-theme-secondary-clr);
+	border-radius: 60px;
+	border: 1px solid var(--app-theme-secondary-clr);
+}
+
+.btn-filter-activated {
+	color: var(--app-secondery-font-clr);
+	background-color: var(--app-theme-secondary-clr);
+}
+
+.btn-filter:hover {
+	cursor: pointer;
+	color: var(--app-secondery-font-clr);
+	border-color: var(--app-btn-hover-clr);
+	background-color: var(--app-btn-hover-clr);
+}
+/* ----------------------------------- */
 .gallery-container {
 	width: 100%;
 	display: grid;

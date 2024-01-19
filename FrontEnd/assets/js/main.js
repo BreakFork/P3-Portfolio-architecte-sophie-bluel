@@ -86,6 +86,110 @@ async function displayProjectsGallery() {
     };
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// FILTER SYSTEM
+
+/**
+ * This function is called when we click on a filter button (eventListener).
+ * It manages the CSS logic of the filter buttons and rebuilds the gallery 
+ * based on the button's dataset.id.
+ * 
+ * [use elementBuilder() function].
+ * 
+ * @param {Element} element - The HTML element on which we apply the behavior.
+ */
+async function filterEngine(element) {
+    removeCssClassOnNodeList("btn-filter-activated", "btn-filter");   //console.log("remove CSS on filter btns");
+    let data = await getData("works");    //console.log(data);
+    let selectedFilter = element.dataset.id;
+    let projectsFiltered;
+
+    if (selectedFilter === "0") {
+        addCssClass("btn-filter-activated", element);
+        projectsFiltered = data.filter(function() {
+            return data;                  //console.log(data);
+        });
+        gallery.innerHTML = "";
+        for (let i = 0; i < projectsFiltered.length; i++) {
+            elementBuilder(projectsFiltered[i].title, projectsFiltered[i].imageUrl);
+            };
+            // console.log(projectsFiltered);
+    } else {
+        addCssClass("btn-filter-activated", element);
+        // console.log(data)
+        projectsFiltered = data.filter(function(data) {   // console.log(data);
+            return data.categoryId === parseInt(selectedFilter);
+        });
+        // console.log(projectsFiltered);
+        // console.log(selectedFilter);
+        gallery.innerHTML = "";
+        for (let i = 0; i < projectsFiltered.length; i++) {
+            elementBuilder(projectsFiltered[i].title, projectsFiltered[i].imageUrl);
+        };
+        // console.log(projectsFiltered);
+    };
+};
+
+/**
+ * This function builds the filter buttons (attributes, CSS classes, 
+ * parent attached, eventListener).
+ * 
+ * [use filterEngine() function].
+ * 
+ */
+async function ButtonFilterFactory() {
+    const categoriesId = await getData("categories")
+    const filtersContainer = document.querySelector(".filters-container");
+
+    let btnShowAllCategories = document.createElement("button");
+
+    btnShowAllCategories.setAttribute("data-id", "0");
+    btnShowAllCategories.setAttribute("role", "button");
+    btnShowAllCategories.textContent = "Tous";
+    btnShowAllCategories.setAttribute("aria-label", btnShowAllCategories.textContent);
+    addCssClass("btn-filter", btnShowAllCategories);
+    addCssClass("btn-filter-activated", btnShowAllCategories); //Add this CSS class by default when we initialize the app (category "ALL")
+
+    filtersContainer.appendChild(btnShowAllCategories);
+
+    btnShowAllCategories.addEventListener("click", function() {
+        //console.log("ALL");
+        filterEngine(this);
+        //console.log("ALL_AFTER");
+    });                                                   
+
+    categoriesId.map((element) => {
+        let btnShowOneCategory = document.createElement("button");
+
+        btnShowOneCategory.setAttribute("data-id", element.id);
+        btnShowOneCategory.setAttribute("role", "button");
+        btnShowOneCategory.textContent = element.name;
+        btnShowOneCategory.setAttribute("aria-label", btnShowOneCategory.textContent);
+        addCssClass("btn-filter", btnShowOneCategory);
+
+        filtersContainer.appendChild(btnShowOneCategory);
+
+        btnShowOneCategory.addEventListener("click", function() {
+            //console.log("ONE");
+            filterEngine(this);
+            //console.log("ONE_AFTER");
+        });
+    });                                                      
+}; 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * This function initializes the filter system.
+ */
+async function filterSystemInit() {
+    ButtonFilterFactory();
+};
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // APP INIT
@@ -96,6 +200,7 @@ async function displayProjectsGallery() {
 async function appInit() {
     await getData();
     await displayProjectsGallery();
+    await filterSystemInit();
 };
 ///////////////////////////////////////////////////////////////////////
 appInit(); 
