@@ -135,7 +135,7 @@ async function filterEngine(element) {
  * 
  */
 async function ButtonFilterFactory() {
-    const categoriesId = await getData("categories")
+    const categoriesId = await getData("categories");
     const filtersContainer = document.querySelector(".filters-container");
 
     let btnShowAllCategories = document.createElement("button");
@@ -145,7 +145,7 @@ async function ButtonFilterFactory() {
     btnShowAllCategories.textContent = "Tous";
     btnShowAllCategories.setAttribute("aria-label", btnShowAllCategories.textContent);
     addCssClass("btn-filter", btnShowAllCategories);
-    addCssClass("btn-filter-activated", btnShowAllCategories); //Add this CSS class by default when we initialize the app (category "ALL")
+    addCssClass("btn-filter-activated", btnShowAllCategories); //Adds this CSS class by default when we initialize the app (category "ALL")
 
     filtersContainer.appendChild(btnShowAllCategories);
 
