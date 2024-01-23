@@ -62,7 +62,7 @@ function toggleEditorButtonDisplay() {
     let portfolioHeader = document.querySelector(".portfolio-header");
 
     let portfolioTitle = document.getElementById("portfolio-header--title");
-    // console.log(portfolioTitle)
+    
     toggleCssClass("title-edition-mode", portfolioTitle);
 
     let editorButton = document.createElement("div");
