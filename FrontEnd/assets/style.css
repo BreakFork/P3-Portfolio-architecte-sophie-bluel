@@ -66,6 +66,34 @@ h2{
 	color: var(--app-theme-secondary-clr);
 }
 /* ____________________________________________ */
+/* EDITION BAR */
+
+div.edition-bar {
+	z-index: 1000;
+	height: 59px;
+	width: 100%;
+	max-width: 1440px;
+	position: fixed;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: var(--app-primary-font);
+	font-weight: var(--app-font-weight-1);
+	font-size: var(--app-font-size-4);
+	color: var(--app-secondery-font-clr);
+	background-color: var(--app-dark-font-clr);
+}
+
+.edition-bar span {
+	margin-left: 11.5px;
+}
+
+.edition-bar i {
+	height: 15.5px;
+	width: 15.5px;
+} 
+/* ____________________________________________ */
 /* NAVBAR */
 .navbar {
 	display: flex;
@@ -134,9 +162,37 @@ h2{
 -> modal-container
 */
 
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+.portfolio-header {
+	margin-bottom: 51px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title-edition-mode {
+	padding-left: 285px;
+	padding-right: 0;
+	margin-right: 0;
+} 
+
+.editor-button {
+	height: 100%;
+	margin-left: 31px;
+	margin-right: 160px;
+	font-family: var(--app-primary-font);
+	font-weight: var(--app-font-weight-1);
+	font-size: var(--app-font-size-3);
+	color: var(--app-dark-font-clr);
+	cursor: pointer;
+	/* background-color: orange; */
+}
+
+.editor-button:hover {
+	color: var(--app-theme-primary-clr);
+}
+
+.portfolio-edition-bar .editor-button {
+	margin-left: 5px;
 }
 /* ----------------------------------- */
 .filters-container {
