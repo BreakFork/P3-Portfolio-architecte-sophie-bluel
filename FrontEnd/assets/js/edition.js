@@ -77,6 +77,32 @@ function toggleEditorButtonDisplay() {
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
+//// EDITOR - SYSTEM FUNCTIONS
+
+// MODAL SYSTEM
+function modalSystemInit() {
+    //// VARIABLES
+    const modaleContainer = document.getElementById("modale-container");
+    const modaleContent = document.querySelector(".modale-content");
+    const modalGalleryContent = document.querySelector(".modale-gallery")
+    const openModalButton = document.querySelector(".editor-button");
+    const modalCloseButton = document.getElementById("modale-close-btn");
+    modalCloseButton.onclick = function() { modaleContainer.style.display = "none"; }
+
+
+    /**
+     * 
+     */
+    async function openModal() {
+        openModalButton.onclick = function() {
+            modaleContainer.style.display = "flex";
+        }
+    };
+
+    openModal();
+};
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 // EDITION MODE - INTERFACE INIT 
 /**
  * 
@@ -87,8 +113,14 @@ function editModeInterfaceInit() {
     toggleFilterButtonsDisplay();
     toggleEditorButtonDisplay();
 }
+//////////////////////////////////////////////////////////////////////////
+// EDITOR - INIT
+function editorSystemInit() {
+    modalSystemInit()
+}
 
 if (window.localStorage.getItem("token")) {
     console.log("VOUS ETES CONNECTE")
     editModeInterfaceInit();
+    editorSystemInit();
 }

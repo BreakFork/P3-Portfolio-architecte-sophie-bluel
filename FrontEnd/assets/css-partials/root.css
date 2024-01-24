@@ -27,4 +27,9 @@
     --app-theme-secondary-clr: #1D6154;
 
     --app-btn-hover-clr: #0E2F28;
+
+    /*-- MODAL --*/
+    --app-modal-font-size-title: 26px;
+    --app-modal-bkg-clr: #FFFFFF;
+    --app-modal-separator-bkg-clr: #B3B3B3;
 }

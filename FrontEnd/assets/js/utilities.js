@@ -9,6 +9,8 @@
  * @param {String} removedClass the CSS class to remove.
  * @param {String} classTargetingNodeList the CSS class that targets the node list.
  * 
+ * [used in filterEngine()]
+ * 
  */
 export async function removeCssClassOnNodeList(removedClass, classTargetingNodeList) {
     const nodeList = [...document.getElementsByClassName(classTargetingNodeList)];
@@ -24,6 +26,7 @@ export async function removeCssClassOnNodeList(removedClass, classTargetingNodeL
  * This function adds a CSS class on a HTMLElement.
  * 
  * [used in filterEngine()]
+ * [used in ButtonFilterFactory()]
  * 
  * @param {String} cssClass The CSS class to add on the element.
  * @param {Element} element The HTMLElement receving the CSS class.
