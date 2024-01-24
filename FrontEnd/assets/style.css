@@ -223,9 +223,11 @@ div.edition-bar {
 /* MODAL Content */
 .modal-content {
 	min-width: 570px;
+	max-width: 630px;
 	background-color: var(--app-modal-bkg-clr);
 	border-radius: 10px;
 	padding: 26px 30px 45px 30px;
+	/* background-color: tomato; */
 }
 /*------------*/
 .close-modale-container {
@@ -240,6 +242,7 @@ div.edition-bar {
 	color: var(--app-dark-font-clr);
 	font-size: var(--app-modal-font-size-title);
 	font-weight: var(--app-font-weight-1);
+	margin-top: 30px;
 	margin-bottom: 46px;
 }
 
@@ -262,6 +265,41 @@ div.edition-bar {
 	border-radius: 60px;
 	padding: 10px 0;
 	background-color: var(--app-theme-secondary-clr);
+	cursor: pointer;
+}
+.modale-gallery {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	column-gap: 9px;
+	row-gap: 30px;
+	margin-bottom: 20px;
+	/* background-color: olive; */
+}
+.modale-gallery-elements-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.modale-gallery-img {
+	width: 100%;
+	max-width: 78px;
+}
+.modale-gallery-delete-button {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	padding-top: 2px;
+	align-items: center;
+	color: white;
+	background-color: black;
+	border-radius: 3px;
+	top: 6px;
+	right: 6px;
+	width: 17px;
+	height: 17px;
+	z-index: 1;
 	cursor: pointer;
 }
 /* ----------------------------------- */

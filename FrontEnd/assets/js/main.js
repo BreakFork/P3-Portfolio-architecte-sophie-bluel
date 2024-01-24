@@ -10,7 +10,7 @@ const gallery = document.querySelector(".gallery-container");
  * @param {String} resource the key word for the URL.
  * @returns data
  */
-async function getData(resource) {
+export async function getData(resource) {
     let fetchResource = resource;
 
     // Sets resource at init when arg:resource is undefined.

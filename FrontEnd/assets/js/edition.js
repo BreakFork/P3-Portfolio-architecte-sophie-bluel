@@ -1,3 +1,4 @@
+import { getData } from "./main.js"
 import { toggleCssClass } from "./utilities.js";
 
 //////////////////////////////////////////////////////////////////////////
@@ -78,34 +79,82 @@ function toggleEditorButtonDisplay() {
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //// EDITOR - SYSTEM FUNCTIONS
+const modalGalleryContent = document.querySelector(".modale-gallery");
+// const modaleContent = document.querySelector(".modale-content");
+let data;
 
 // MODAL SYSTEM
+
+/**
+ * This function intializes the opening modal system on openModalButton.
+ * -> lauches displayEditorGallery() function.
+ * 
+ */
 function modalSystemInit() {
-    //// VARIABLES
+    //// VARIABLES MODAL
     const modaleContainer = document.getElementById("modale-container");
-    const modaleContent = document.querySelector(".modale-content");
-    const modalGalleryContent = document.querySelector(".modale-gallery")
     const openModalButton = document.querySelector(".editor-button");
     const modalCloseButton = document.getElementById("modale-close-btn");
-    modalCloseButton.onclick = function() { modaleContainer.style.display = "none"; }
 
+    modalCloseButton.onclick = function() { modaleContainer.style.display = "none"; };
 
     /**
-     * 
+     * This function opens the modal when user click on openModalButton.
      */
     async function openModal() {
         openModalButton.onclick = function() {
             modaleContainer.style.display = "flex";
-        }
+            modalGalleryContent.innerHTML = "";
+            displayEditorGallery();
+        };
     };
 
     openModal();
 };
+
+// GALLERY SYSTEM
+
+/**
+ * This function builds the gallery that displays in the modal when 
+ * the user opens it by clicking the openModalButton (event -> openModal()).
+ * 
+ * [use getData("works") function].
+ * [use openModal() function].
+ * 
+ */
+async function displayEditorGallery() {
+    data = await getData("works");
+
+    for(let i = 0; i < data.length; i++) {
+        const galleryEditorElement = document.createElement("div");
+        galleryEditorElement.classList.add("modale-gallery-elements-container");
+
+        const imgEditorElement = document.createElement("img");
+        imgEditorElement.src = data[i].imageUrl;
+        imgEditorElement.setAttribute("alt", data[i].title);
+        imgEditorElement.classList.add("modale-gallery-img");
+
+        const deleteButton = document.createElement("div");
+        deleteButton.classList.add("modale-gallery-delete-button");
+        deleteButton.id = data[i].id;
+        deleteButton.innerHTML = `<i id=${data[i].id} class="fa-solid fa-trash-can fa-xs"></i>`;
+
+        galleryEditorElement.appendChild(imgEditorElement);
+        galleryEditorElement.appendChild(deleteButton);
+        modalGalleryContent.appendChild(galleryEditorElement);
+
+        deleteButton.addEventListener("click", (event) => {
+            console.log(event.target.parentNode.id)
+        });
+    };
+};
+
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 // EDITION MODE - INTERFACE INIT 
 /**
- * 
+ * This function initializes the edition interface. 
+ * Displays all the elements and sets all behaviours.
  */
 function editModeInterfaceInit() {
     toggleLoginLogOutFunctionality();
@@ -115,6 +164,9 @@ function editModeInterfaceInit() {
 }
 //////////////////////////////////////////////////////////////////////////
 // EDITOR - INIT
+/**
+ * 
+ */
 function editorSystemInit() {
     modalSystemInit()
 }
