@@ -302,6 +302,9 @@ div.edition-bar {
 	z-index: 1;
 	cursor: pointer;
 }
+
+
+
 /* ----------------------------------- */
 .filters-container {
 	width: 100%;
@@ -330,7 +333,7 @@ div.edition-bar {
 	background-color: var(--app-theme-secondary-clr);
 }
 
-.btn-filter:hover {
+.btn-filter:hover, .add-photo-btn:hover {
 	cursor: pointer;
 	color: var(--app-secondery-font-clr);
 	border-color: var(--app-btn-hover-clr);
