@@ -212,7 +212,6 @@ div.edition-bar {
 	transform: translate(-50%, -50%);
 	background-color: rgba(0, 0, 0, 0.3);
   }
-
 #modale-close-btn {
 	display: flex;
 	justify-content: flex-end;

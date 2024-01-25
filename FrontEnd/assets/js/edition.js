@@ -81,7 +81,8 @@ function toggleEditorButtonDisplay() {
 
 //// EDITOR - SYSTEM 
 const modalGalleryContent = document.querySelector(".modale-gallery");
-// const modaleContent = document.querySelector(".modale-content");
+const modalAddWorkButton = document.querySelector(".add-photo-btn");
+const modaleContent = document.querySelector(".modal-content");
 let data;
 
 // MODAL SYSTEM ----------------------------------------------------------
@@ -95,7 +96,7 @@ function modalSystemInit() {
     //// VARIABLES MODAL
     const modaleContainer = document.getElementById("modale-container");
     const openModalButton = document.querySelector(".editor-button");
-    const modalCloseButton = document.getElementById("modale-close-btn");
+    const modalCloseButton = document.getElementById("close-modale");
 
     modalCloseButton.onclick = function() { modaleContainer.style.display = "none"; };
 
@@ -107,9 +108,14 @@ function modalSystemInit() {
             modaleContainer.style.display = "flex";
             modalGalleryContent.innerHTML = "";
             displayEditorGallery();
+            modalAddWorkButton.addEventListener("click", () => {
+                openAddWorkInterface();
+            })
+            modaleContent.addEventListener("click", (event) => {
+                event.stopPropagation();
+            })
         };
     };
-
     openModal();
 };
 
@@ -150,11 +156,64 @@ async function displayEditorGallery() {
     };
 };
 
+// ADD WORK SYSTEM -------------------------------------------------------
+const modalTitle = document.querySelector(".modale-title");
+const modalWindowButtonsContainer = document.getElementById("modale-close-btn");
 
+// --- set interface :
+/**
+ * This function initializes the editor's interface.
+ */
+function openAddWorkInterface() {
+    setModalAddWorkInterface();
+}
 
-//  ------------------------------------------
+/**
+ * This function defines the display of the editor interface.
+ */
+function setModalAddWorkInterface() {
+    modalGalleryContent.innerHTML = "";
+    modalTitle.textContent = "Ajout photo";
+    // modalAddWorkButton.textContent = "Scope OK !";
+    createAddWorkGoBackButton();
+    // createAddWorkForm();
+}
 
+/**
+ * This function restarts the editor gallery when the user 
+ * exits the addWork() functionality by clicking the goBackButton.  
+ */
+function rebootModalGallery() {
+    modalTitle.textContent = "Galerie photo";
+    modalWindowButtonsContainer.style.justifyContent = "flex-end";
+    document.getElementById("go-back-button").remove();
+};
 
+/**
+ * This function generates a goBackButton (left arrow) allowing 
+ * the user to exit the addWork() functionality of the editor.
+ * 
+ * [use rebootModalGallery() function]
+ * [use displayEditorGallery() function]
+ * 
+ */
+function createAddWorkGoBackButton() {
+    const goBackButton = document.createElement("div");
+
+    goBackButton.id = "go-back-button";
+    goBackButton.classList.add("go-back-button");
+    goBackButton.innerHTML = "<i class=\"fa-solid fa-arrow-left fa-lg\"></i>";
+
+    modalWindowButtonsContainer.prepend(goBackButton);
+    modalWindowButtonsContainer.style.justifyContent = "space-between";
+
+    goBackButton.addEventListener("click", () => {
+        rebootModalGallery()
+        displayEditorGallery();
+    })
+}
+
+// --- set form :
 
 
 
