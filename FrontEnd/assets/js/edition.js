@@ -3,7 +3,7 @@ import { toggleCssClass } from "./utilities.js";
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-//// EDITION MODE - INTERFACE FUNCTIONS 
+//// EDITION MODE - INTERFACE  
 /**
  * This function removes the token on localStorage
  */
@@ -78,12 +78,13 @@ function toggleEditorButtonDisplay() {
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-//// EDITOR - SYSTEM FUNCTIONS
+
+//// EDITOR - SYSTEM 
 const modalGalleryContent = document.querySelector(".modale-gallery");
 // const modaleContent = document.querySelector(".modale-content");
 let data;
 
-// MODAL SYSTEM
+// MODAL SYSTEM ----------------------------------------------------------
 
 /**
  * This function intializes the opening modal system on openModalButton.
@@ -112,7 +113,7 @@ function modalSystemInit() {
     openModal();
 };
 
-// GALLERY SYSTEM
+// GALLERY SYSTEM --------------------------------------------------------
 
 /**
  * This function builds the gallery that displays in the modal when 
@@ -148,6 +149,15 @@ async function displayEditorGallery() {
         });
     };
 };
+
+
+
+//  ------------------------------------------
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
