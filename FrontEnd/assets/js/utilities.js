@@ -37,6 +37,16 @@ export async function addCssClass(cssClass, element) {
 };
 
 /**
+ * This function removes a CSS class on a HTMLElement.
+ * 
+ * @param {String} cssClass The CSS class to remove on the element
+ * @param {Element} element The HTMLElement ------- the CSS class
+ */
+export async function removeCssClass(removedClass, element) {
+    element.classList.remove(removedClass);
+};
+
+/**
  * This function toggles a CSS class on a HTMLElement.
  * 
  * [used in toggleEditionHeaderDisplay()]
@@ -50,3 +60,71 @@ export async function addCssClass(cssClass, element) {
 export async function toggleCssClass(cssClass, element) {
     element.classList.toggle(cssClass);
 };
+
+/**
+ * 
+ * @param {element} emptyElement 
+ * @param {array || null} param1 
+ * @param {boolean} option 
+ */
+export function removeChildElementsFromNodeList([...removedElements], emptyElement, option) {
+    const parentArray = [];
+    const childArray = [];
+    const resultArray = [];
+
+    const array = Array.from(emptyElement.childNodes);
+    const args = Array.from([...removedElements]);
+
+    for(const member of array) {
+        parentArray.push(member);
+    }
+
+    for(const arg of args) {
+        childArray.push(arg);
+    }
+
+    childArray.forEach(member => {
+        if(parentArray.includes(member)) {
+            console.log(...member)
+        }
+    })
+
+    // console.log(childArray)
+
+    
+
+    // console.log(parentArray)
+
+
+
+
+    function cleaner() { console.log("CLEANER :")
+
+        const parentArray = [];
+        const childArray = [];
+        const resultArray = [];
+
+        const array = Array.from(emptyElement.childNodes);
+        const args = Array.from([...removedElements]);
+        console.log(array)
+        for(const member of array) {
+            parentArray.push(member);     
+        }
+
+        for(const arg of args) {
+            childArray.push(arg);
+        }
+
+
+        // console.log(childArray)
+        childArray.forEach(element => {
+            if(parentArray.includes(element)) {
+                return console.log(element)
+            }
+        })
+    }
+
+    option === true ? cleaner()
+    : console.log(option);
+}
+

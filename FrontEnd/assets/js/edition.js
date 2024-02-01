@@ -1,9 +1,9 @@
 import { getData } from "./main.js"
-import { toggleCssClass } from "./utilities.js";
+import { toggleCssClass, addCssClass, removeCssClass } from "./utilities.js";
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-//// EDITION MODE - INTERFACE  
+//// EDITION MODE : INTERFACE  
 /**
  * This function removes the token on localStorage
  */
@@ -67,63 +67,20 @@ function toggleEditorButtonDisplay() {
     toggleCssClass("title-edition-mode", portfolioTitle);
 
     let editorButton = document.createElement("div");
-    toggleCssClass("editor-button", editorButton);
+    addCssClass("editor-button", editorButton);
     editorButton.innerHTML = `
         <i class="fa-solid fa-pen-to-square"></i>
         <a id="editor-button href="#">Mode édition</a>
     `;
 
     portfolioHeader.appendChild(editorButton);
-}
-
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-
-//// EDITOR - SYSTEM 
-const modalGalleryContent = document.querySelector(".modale-gallery");
-const modalAddWorkButton = document.querySelector(".add-photo-btn");
-const modaleContent = document.querySelector(".modal-content");
-let data;
-
-// MODAL SYSTEM ----------------------------------------------------------
-
-/**
- * This function intializes the opening modal system on openModalButton.
- * -> lauches displayEditorGallery() function.
- * 
- */
-function modalSystemInit() {
-    //// VARIABLES MODAL
-    const modaleContainer = document.getElementById("modale-container");
-    const openModalButton = document.querySelector(".editor-button");
-    const modalCloseButton = document.getElementById("close-modale");
-
-    modalCloseButton.onclick = function() { modaleContainer.style.display = "none"; };
-
-    /**
-     * This function opens the modal when user click on openModalButton.
-     */
-    async function openModal() {
-        openModalButton.onclick = function() {
-            modaleContainer.style.display = "flex";
-            modalGalleryContent.innerHTML = "";
-            displayEditorGallery();
-            modalAddWorkButton.addEventListener("click", () => {
-                openAddWorkInterface();
-            })
-            modaleContent.addEventListener("click", (event) => {
-                event.stopPropagation();
-            })
-        };
-    };
-    openModal();
 };
 
 // GALLERY SYSTEM --------------------------------------------------------
 
 /**
  * This function builds the gallery that displays in the modal when 
- * the user opens it by clicking the openModalButton (event -> openModal()).
+ * the user opens it by clicking the modalOpenButton (event -> openModal()).
  * 
  * [use getData("works") function].
  * [use openModal() function].
@@ -154,69 +111,306 @@ async function displayEditorGallery() {
             console.log(event.target.parentNode.id)
         });
     };
+    addWorkButtonFunctionality();
+    modaleContainer.setAttribute("aria-hiden", "false");
+};
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//// EDITION MODE : MODAL AND EDITOR 
+const DOM_body = document.querySelector(".body");
+const modaleContainer = document.getElementById("modale-container");
+const modaleContent = document.querySelector(".modal-content");
+const modalWindowButtonsContainer = document.getElementById("modale-navbar-btn");
+const modalTitle = document.querySelector(".modale-title");
+const modalGalleryContent = document.querySelector(".modale-gallery");
+const modalCloseButton = document.getElementById("close-modale");
+let form = document.getElementById("addWorkForm");
+let data;
+
+/**
+ * This function lauches the reset of the modal :
+ * - Sets the buttons of the modale navbar and the main button 
+ *   using AddWorkButtonGalleryMode() 
+ * - Sets the body position (for scrolling).
+ * - Sets the display of the modale itself
+ * 
+ * [use AddWorkButtonGalleryMode()]
+ * [use rebootModale()]
+ * 
+ */
+function closeModal() {
+    AddWorkButtonGalleryMode(document.querySelector(".add-photo-btn"));
+    modalWindowButtonsContainer.style.justifyContent = "flex-end";
+
+    modaleContainer.addEventListener("click", () => {rebootModale()});
+
+    modalCloseButton.addEventListener("click", () => {
+        removeCssClass("body-modal-mode", DOM_body);
+        rebootModale();
+    });
+    
+    if (document.getElementById("go-back-button") !== null) {
+        document.getElementById("go-back-button").remove();
+    };
+
+    modaleContainer.setAttribute("aria-hiden", "true");
+    DOM_body.classList.remove("body-modal-mode");
 };
 
-// ADD WORK SYSTEM -------------------------------------------------------
-const modalTitle = document.querySelector(".modale-title");
-const modalWindowButtonsContainer = document.getElementById("modale-close-btn");
-
-// --- set interface :
 /**
- * This function initializes the editor's interface.
+ * This function allows the user to access the modal by placing an 
+ * eventListener on the editor button.
+ * 
+ * [use displayEditorGallery()]
+ * 
  */
-function openAddWorkInterface() {
-    setModalAddWorkInterface();
-}
-
-/**
- * This function defines the display of the editor interface.
- */
-function setModalAddWorkInterface() {
+function openModal() {
+    let editorButton = document.querySelector(".editor-button");
     modalGalleryContent.innerHTML = "";
-    modalTitle.textContent = "Ajout photo";
-    // modalAddWorkButton.textContent = "Scope OK !";
-    createAddWorkGoBackButton();
-    // createAddWorkForm();
-}
+    
+    editorButton.addEventListener("click", () => {
+        addCssClass("body-modal-mode", DOM_body);
+        modaleContainer.style.display = "flex";
+        modalGalleryContent.innerHTML = "";
+        displayEditorGallery();
+    })
+    modaleContent.addEventListener("click", (event) => {
+        event.stopPropagation();
+    })
+};
 
 /**
- * This function restarts the editor gallery when the user 
- * exits the addWork() functionality by clicking the goBackButton.  
+ * This function restarts the modal :
+ * - Sets the buttons of the modale navbar and the main button 
+ *   using AddWorkButtonGalleryMode() 
+ * - Sets the display of the modale itself
+ * 
+ * [use AddWorkButtonGalleryMode()]
+ *  
  */
-function rebootModalGallery() {
-    modalTitle.textContent = "Galerie photo";
+function rebootModale() {
+    AddWorkButtonGalleryMode(document.querySelector(".add-photo-btn"));
+    modaleContainer.style.display = "none";
+    modalGalleryContent.innerHTML = "";
+    addCssClass("modale-gallery", modalGalleryContent);
     modalWindowButtonsContainer.style.justifyContent = "flex-end";
-    document.getElementById("go-back-button").remove();
+    if (document.getElementById("go-back-button") !== null) { 
+        document.getElementById("go-back-button").remove();
+    };
+    modaleContainer.setAttribute("aria-hidden", "true");
 };
 
 /**
  * This function generates a goBackButton (left arrow) allowing 
  * the user to exit the addWork() functionality of the editor.
  * 
- * [use rebootModalGallery() function]
- * [use displayEditorGallery() function]
+ * [use displayEditorGallery()]
+ * [use AddWorkButtonGalleryMode()]
  * 
  */
 function createAddWorkGoBackButton() {
     const goBackButton = document.createElement("div");
-
     goBackButton.id = "go-back-button";
-    goBackButton.classList.add("go-back-button");
+    addCssClass("go-back-button", goBackButton);
     goBackButton.innerHTML = "<i class=\"fa-solid fa-arrow-left fa-lg\"></i>";
-
     modalWindowButtonsContainer.prepend(goBackButton);
     modalWindowButtonsContainer.style.justifyContent = "space-between";
 
     goBackButton.addEventListener("click", () => {
-        rebootModalGallery()
+        modalGalleryContent.innerHTML = "";
+        addCssClass("modale-gallery", modalGalleryContent)
+        modalWindowButtonsContainer.style.justifyContent = "flex-end";
+        modalWindowButtonsContainer.removeChild(modalWindowButtonsContainer.firstElementChild);
+        modalTitle.innerText = "Galerie photo";
         displayEditorGallery();
+        AddWorkButtonGalleryMode(document.querySelector(".add-photo-btn"));
     })
-}
+};
 
+/**
+ * This function sets the adWorkButton in editor mode
+ * 
+ * @param {element} element 
+ */
+function AddWorkButtonEditorMode(element) {
+    element.textContent = "Valider";
+    element.style.backgroundColor = "var(--app-modal-submit-btn-disabled-bkg-clr)";
+};
+
+/**
+ * This function sets the adWorkButton in gallery mode
+ * 
+ * @param {element} element 
+ */
+function AddWorkButtonGalleryMode(element) {
+    element.textContent = "Ajouter une photo";
+    element.style.backgroundColor = "var(--app-theme-secondary-clr)";
+    element.disabled = false;
+};
+
+/**
+ * This function lauches the display of the addWorkForm.
+ * 
+ * [use createAddWorkForm()]
+ * [use AddWorkButtonEditorMode()]
+ */
+function addWorkButtonFunctionality() {
+    document.querySelector(".add-photo-btn").addEventListener("click", () => {
+        modalGalleryContent.innerHTML = "";
+        removeCssClass("modale-gallery", modalGalleryContent);
+        if (!document.getElementById("go-back-button")) {
+            createAddWorkGoBackButton();
+        }
+        
+        createAddWorkForm();
+        modalTitle.innerText = "Ajout photo";
+        AddWorkButtonEditorMode(document.querySelector(".add-photo-btn"));
+    })
+};
+//////////////////////////////////////
 // --- set form :
 
+/**
+ * This function creates an input file for addWorkForm.
+ * 
+ * @param {element} element 
+ */
+function createInputFile(element) {  //console.log("FROM ELEMENT : " + element)
+    let inputFile = document.createElement("input");
 
+    inputFile.type = "file";
+    inputFile.id = "file";
+    // inputFile.classList.add("");
+    inputFile.style.opacity = 0;
+    inputFile.style.height = "0px";
+    inputFile.setAttribute("name", "image");
+    inputFile.setAttribute("accept", ".jpg, .png");
 
+    let inputFileLabel = document.createElement("label");
+
+    inputFileLabel.classList.add("addWork-input-file-label");
+    // inputFile.classList.add("");
+    inputFileLabel.setAttribute("for", "file");
+    inputFileLabel.textContent = "+ Ajouter photo";
+
+    element.appendChild(inputFileLabel);
+    element.appendChild(inputFile);
+};
+
+/**
+ * 
+ * This function cretes an input text for addWorkForm.
+ * 
+ * @param {element} element 
+ */
+function createInputText(element) {
+    let inputText = document.createElement("input");
+
+    inputText.type = "text";
+    inputText.classList.add("addWork-input");
+    inputText.name = "title";
+    inputText.id = "title";
+
+    let inputTextLabel = document.createElement("label");
+    inputTextLabel.textContent = "Titre";
+    inputTextLabel.setAttribute("for", "title");
+
+    element.appendChild(inputTextLabel);
+    element.appendChild(inputText);
+};
+
+/**
+ * This function creates an input select for addWorkForm.
+ * -> fetch "categories"
+ * 
+ * @param {element} element 
+ */
+async function createInputSelect(element) {
+    let inputSelect = document.createElement("select");
+
+    inputSelect.name = "category";
+    inputSelect.id = "categories";
+    inputSelect.classList.add("addWork-input");
+
+    let inputSelectLabel = document.createElement("label");
+
+    inputSelectLabel.setAttribute("for", "categories");
+    inputSelectLabel.id = "selected-category";
+    inputSelectLabel.textContent = "Categorie";
+
+    let defaultOption = document.createElement("option");
+
+    defaultOption.value = "";
+
+    inputSelect.appendChild(defaultOption);
+    element.appendChild(inputSelectLabel);
+    element.appendChild(inputSelect);
+
+    data = await getData("categories"); console.log("FROM INPUT : " + JSON.stringify(data))
+
+    for (const category of data) {
+        let option = document.createElement("option");
+
+        option.value = category.id;
+        option.textContent = category.name;
+
+        inputSelect.appendChild(option);
+    }
+};
+
+/**
+ * This function creates a submit button for addWorkForm.
+ */
+function createSubmitButton() {
+    let editorSubmitButton = document.createElement("button");
+
+    editorSubmitButton.id = "editorSubmitButton";
+    editorSubmitButton.setAttribute("form", "addWorkForm");
+    editorSubmitButton.setAttribute("type", "submit");
+    editorSubmitButton.innerText = "Valider";
+    editorSubmitButton.classList.add("add-photo-btn");
+    editorSubmitButton.style.backgroundColor = "var(--app-modal-submit-btn-bkg-clr)";
+
+    document.querySelector(".close-modale-container").appendChild(editorSubmitButton);
+};
+
+/**
+ * This function creates the addWorkForm allowing the user to 
+ * create new works.
+ */
+function createAddWorkForm() {
+    document.querySelector(".add-photo-btn").remove()
+
+    form = document.createElement("form");
+    form.id = "addWorkForm";
+    form.setAttribute("action", "");
+    form.setAttribute("method", "post");
+    form.classList.add("addWorkForm");
+
+    let inputFileContainer = document.createElement("div");
+    inputFileContainer.classList.add("addWork-input-file-container");
+
+    let allowedDataText = document.createElement("p");
+    allowedDataText.classList.add("allowed-data-text");
+    // allowedDataText.classList.add("");
+    allowedDataText.textContent = "jpg, png : 4mo max";
+
+    let bkgImage = document.createElement("img");    
+    bkgImage.src = "../FrontEnd/assets/icons/picture-svgrepo-com 1.png";
+
+    inputFileContainer.appendChild(bkgImage);
+
+    createInputFile(inputFileContainer);
+    inputFileContainer.appendChild(allowedDataText);
+
+    form.appendChild(inputFileContainer);
+
+    createInputText(form);
+    createInputSelect(form);
+    createSubmitButton(); 
+    
+    modalGalleryContent.appendChild(form);
+}
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -232,16 +426,10 @@ function editModeInterfaceInit() {
     toggleEditorButtonDisplay();
 }
 //////////////////////////////////////////////////////////////////////////
-// EDITOR - INIT
-/**
- * 
- */
-function editorSystemInit() {
-    modalSystemInit()
-}
-
+//////////////////////////////////////////////////////////////////////////
 if (window.localStorage.getItem("token")) {
     console.log("VOUS ETES CONNECTE")
     editModeInterfaceInit();
-    editorSystemInit();
+    openModal();
+    closeModal();
 }

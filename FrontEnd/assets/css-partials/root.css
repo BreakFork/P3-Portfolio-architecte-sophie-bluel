@@ -32,4 +32,8 @@
     --app-modal-font-size-title: 26px;
     --app-modal-bkg-clr: #FFFFFF;
     --app-modal-separator-bkg-clr: #B3B3B3;
+    --app-modal-input-file-btn-clr: #306685;
+    --app-modal-input-file-bkg-clr: #CBD6DC;
+    --app-modal-submit-btn-disabled-bkg-clr: #A7A7A7;
+    --app-modal-input-file-container-bkg-clr: #E8F1F6;
 }
