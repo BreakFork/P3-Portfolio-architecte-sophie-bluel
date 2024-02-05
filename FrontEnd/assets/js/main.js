@@ -47,7 +47,7 @@ export async function getData(resource) {
  * @param {String} title data.title - Sets figcaption of the figure element and the alt attribute of the img.
  * @param {String} src  data.imageUrl - The URI of the figure element.
  */
-async function elementBuilder(title, src) {
+export async function elementBuilder(title, src) {
     const galleryElement = document.createElement("figure");
 
     const titleElement = document.createElement("figcaption");
@@ -69,10 +69,10 @@ async function elementBuilder(title, src) {
  * This function displays all the projects of the gallery
  * @param {Object} data the data object
  * 
- * [use getData("works") function].
- * [use elementBuilder() function].
+ * [use getData("works")]
+ * [use elementBuilder()]
  */
-async function displayProjectsGallery() {
+export async function displayProjectsGallery() {
     data = await getData("works");
 
     if (gallery) {
@@ -91,7 +91,9 @@ async function displayProjectsGallery() {
  * It manages the CSS logic of the filter buttons and rebuilds the gallery 
  * based on the button's dataset.id.
  * 
- * [use elementBuilder() function].
+ * [use elementBuilder()]
+ * [use removeCssClassOnNodeList()]
+ * [use addCssClass()]
  * 
  * @param {Element} element - The HTML element on which we apply the behavior.
  */
@@ -131,7 +133,7 @@ async function filterEngine(element) {
  * This function builds the filter buttons (attributes, CSS classes, 
  * parent attached, eventListener).
  * 
- * [use filterEngine() function].
+ * [use filterEngine()].
  * 
  */
 async function ButtonFilterFactory() {
@@ -181,11 +183,6 @@ async function filterSystemInit() {
     ButtonFilterFactory();
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // APP INIT
 /**

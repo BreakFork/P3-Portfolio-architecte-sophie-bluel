@@ -1,4 +1,5 @@
 import { getData } from "./main.js"
+import { displayProjectsGallery } from "./main.js";
 import { toggleCssClass, addCssClass, removeCssClass } from "./utilities.js";
 
 //////////////////////////////////////////////////////////////////////////
@@ -139,7 +140,8 @@ let data;
  * 
  */
 function closeModal() {
-    AddWorkButtonGalleryMode(document.querySelector(".add-photo-btn"));
+    let addWorkbutton = document.querySelector(".add-photo-btn");
+    AddWorkButtonGalleryMode(addWorkbutton);
     modalWindowButtonsContainer.style.justifyContent = "flex-end";
 
     modaleContainer.addEventListener("click", () => {rebootModale()});
@@ -187,9 +189,10 @@ function openModal() {
  * 
  * [use AddWorkButtonGalleryMode()]
  *  
- */
+ */                                                     
 function rebootModale() {
-    AddWorkButtonGalleryMode(document.querySelector(".add-photo-btn"));
+    let addWorkBtn = document.querySelector(".add-photo-btn");
+    AddWorkButtonGalleryMode(addWorkBtn);
     modaleContainer.style.display = "none";
     modalGalleryContent.innerHTML = "";
     addCssClass("modale-gallery", modalGalleryContent);
@@ -210,6 +213,7 @@ function rebootModale() {
  */
 function createAddWorkGoBackButton() {
     const goBackButton = document.createElement("div");
+
     goBackButton.id = "go-back-button";
     addCssClass("go-back-button", goBackButton);
     goBackButton.innerHTML = "<i class=\"fa-solid fa-arrow-left fa-lg\"></i>";
@@ -234,7 +238,7 @@ function createAddWorkGoBackButton() {
  */
 function AddWorkButtonEditorMode(element) {
     element.textContent = "Valider";
-    element.style.backgroundColor = "var(--app-modal-submit-btn-disabled-bkg-clr)";
+    element.classList.add("disabled");
 };
 
 /**
@@ -244,7 +248,7 @@ function AddWorkButtonEditorMode(element) {
  */
 function AddWorkButtonGalleryMode(element) {
     element.textContent = "Ajouter une photo";
-    element.style.backgroundColor = "var(--app-theme-secondary-clr)";
+    element.classList.remove("disabled");
     element.disabled = false;
 };
 
@@ -255,16 +259,22 @@ function AddWorkButtonGalleryMode(element) {
  * [use AddWorkButtonEditorMode()]
  */
 function addWorkButtonFunctionality() {
-    document.querySelector(".add-photo-btn").addEventListener("click", () => {
+    let addWorkBtn = document.querySelector(".add-photo-btn");
+    addWorkBtn.addEventListener("click", () => {
+
         modalGalleryContent.innerHTML = "";
+
+        createAddWorkForm();
+
+        modalTitle.innerText = "Ajout photo";
+
+        AddWorkButtonEditorMode(addWorkBtn);
+
         removeCssClass("modale-gallery", modalGalleryContent);
+
         if (!document.getElementById("go-back-button")) {
             createAddWorkGoBackButton();
         }
-        
-        createAddWorkForm();
-        modalTitle.innerText = "Ajout photo";
-        AddWorkButtonEditorMode(document.querySelector(".add-photo-btn"));
     })
 };
 //////////////////////////////////////
@@ -275,12 +285,12 @@ function addWorkButtonFunctionality() {
  * 
  * @param {element} element 
  */
-function createInputFile(element) {  //console.log("FROM ELEMENT : " + element)
+function createInputFile(element) {  
     let inputFile = document.createElement("input");
 
     inputFile.type = "file";
     inputFile.id = "file";
-    // inputFile.classList.add("");
+    inputFile.classList.add("invisible");
     inputFile.style.opacity = 0;
     inputFile.style.height = "0px";
     inputFile.setAttribute("name", "image");
@@ -289,7 +299,7 @@ function createInputFile(element) {  //console.log("FROM ELEMENT : " + element)
     let inputFileLabel = document.createElement("label");
 
     inputFileLabel.classList.add("addWork-input-file-label");
-    // inputFile.classList.add("");
+    inputFileLabel.classList.add("invisible");
     inputFileLabel.setAttribute("for", "file");
     inputFileLabel.textContent = "+ Ajouter photo";
 
@@ -298,8 +308,7 @@ function createInputFile(element) {  //console.log("FROM ELEMENT : " + element)
 };
 
 /**
- * 
- * This function cretes an input text for addWorkForm.
+ * This function creates an input text for addWorkForm.
  * 
  * @param {element} element 
  */
@@ -369,17 +378,31 @@ function createSubmitButton() {
     editorSubmitButton.setAttribute("type", "submit");
     editorSubmitButton.innerText = "Valider";
     editorSubmitButton.classList.add("add-photo-btn");
-    editorSubmitButton.style.backgroundColor = "var(--app-modal-submit-btn-bkg-clr)";
+    editorSubmitButton.classList.add("disabled");
 
     document.querySelector(".close-modale-container").appendChild(editorSubmitButton);
 };
+
+/**
+ * This function creates a container to diplay the the form's
+ * error messages.
+ * 
+ * @param {element} element 
+ * @param {number} id 
+ */
+function createErrorMessageContainer(element, id) {
+    let errorContainer = document.createElement("div");
+    errorContainer.id = "error" + id;
+    errorContainer.setAttribute("arira-hiden", "true");
+    element.appendChild(errorContainer);
+}
 
 /**
  * This function creates the addWorkForm allowing the user to 
  * create new works.
  */
 function createAddWorkForm() {
-    document.querySelector(".add-photo-btn").remove()
+    document.querySelector(".add-photo-btn").remove();
 
     form = document.createElement("form");
     form.id = "addWorkForm";
@@ -392,13 +415,16 @@ function createAddWorkForm() {
 
     let allowedDataText = document.createElement("p");
     allowedDataText.classList.add("allowed-data-text");
-    // allowedDataText.classList.add("");
+    allowedDataText.classList.add("invisible");
     allowedDataText.textContent = "jpg, png : 4mo max";
 
     let bkgImage = document.createElement("img");    
     bkgImage.src = "../FrontEnd/assets/icons/picture-svgrepo-com 1.png";
-
+    bkgImage.classList.add("invisible");
     inputFileContainer.appendChild(bkgImage);
+
+    let messageContainer = document.createElement("p");
+    messageContainer.classList.add("error-container");
 
     createInputFile(inputFileContainer);
     inputFileContainer.appendChild(allowedDataText);
@@ -407,10 +433,241 @@ function createAddWorkForm() {
 
     createInputText(form);
     createInputSelect(form);
+    form.appendChild(messageContainer);
+    createErrorMessageContainer(messageContainer, "File");
+    createErrorMessageContainer(messageContainer, "Title");
+    createErrorMessageContainer(messageContainer, "Category");
     createSubmitButton(); 
     
     modalGalleryContent.appendChild(form);
+    submitAddWorkFormValidation(form);
 }
+//////////////////////////////////////
+// ADD WORKS FUNCTIONALITY
+// --- sets inputs
+/**
+ * This function sends the form's error messages on submit event.
+ * 
+ * @param {string} message 
+ * @param {number} id 
+ */
+function sendErrorMessage(message, id) {
+    let errorMessage = document.getElementById("error" + id);
+    errorMessage.classList.add("error-message")
+    errorMessage.textContent = message;
+};
+
+/**
+ * This function checks if the input file is entered and displays 
+ * the error message if necessary (using sendErrorMessage() function).
+ * 
+ * [use sendErrorMessage()]
+ * 
+ * @param {object} inputFile 
+ * @returns 
+ */
+function inputFileValidation(inputFile) {
+    if (inputFile.value != "") {
+        document.getElementById("errorFile").style.display = "none";
+        return true;
+    } else {
+        document.getElementById("errorFile").style.display = "block";
+        sendErrorMessage("Veuillez charger une image", "File");
+    }
+};
+
+/**
+ * This function checks if the input text (for Title) is entered and displays 
+ * the error message if necessary (using sendErrorMessage() function).
+ * 
+ * [use sendErrorMessage()]
+ * 
+ * @param {string} inputTitle 
+ * @returns 
+ */
+function inputTextValidation(inputTitle) {
+    let regex = new RegExp("[a-zA-Z0-9._-]+");
+    if (regex.test(inputTitle)) {
+        document.getElementById("errorTitle").style.display = "none";
+        return true;
+    } else {
+        document.getElementById("errorTitle").style.display = "block";
+        sendErrorMessage("Veuillez renseigner un titre", "Title");
+    };
+}
+
+/**
+ * This function checks if the input select is entered and displays 
+ * the error message if necessary (using sendErrorMessage() function).
+ * 
+ * [use sendErrorMessage()]
+ * 
+ * @param {string} inputCategory 
+ * @returns 
+ */
+function inputSelectValidation(inputCategory) {
+    if (inputCategory !== "") {
+        document.getElementById("errorCategory").style.display = "none";
+        return true;
+    } else {
+        document.getElementById("errorCategory").style.display = "block";
+        sendErrorMessage("Veuillez renseigner une catégorie", "Category");
+    }
+};
+
+/**
+ * This function generates a validation message to display when
+ * user successfully add a work using addWorkForm's submit event.
+ * 
+ * @param {element} element 
+ */
+function sendValidationMessage(element) {
+    let validationMessage = document.createElement("p");
+    validationMessage.id = "addWork-checked";
+    element.appendChild(validationMessage);
+    validationMessage.textContent = "Votre travail a bien été ajouté";
+}
+
+/**
+ * This function removes the message of validation (when user adds work) 
+ * after timeout setted inside postWork() function.
+ */
+function removeValidationMessage() {
+    let validationMessage = document.getElementById("addWork-checked");
+    if (validationMessage !== null) {
+        validationMessage.remove();
+    }
+}
+
+/**
+ * This function hides elements of the addWorkForm to allow the preview
+ * of the image loaded.
+ * 
+ * @param {element} elements 
+ * @param {img} imgPreview 
+ */
+function hideElementsForImgPreview(elements, imgPreview) {
+    for (const element of elements) {
+        element.classList.toggle("opacity-zero");
+    }
+    imgPreview.remove();
+};
+
+/**
+ * This function creates the image preview functionality in addWorkForm.
+ * 
+ * [use hideElementsForImgPreview()]
+ * 
+ * @param {object} inputFile 
+ */
+function updatePreviewImage(inputFile) {
+    document.getElementById("errorFile").style.display = "none";
+
+    let hiddenElements = document.querySelectorAll(".invisible");
+    let imgPreview = document.createElement("img");
+
+    imgPreview.style.position = "absolute";
+    imgPreview.style.height = "100%";
+    imgPreview.style.width = "100%";
+    imgPreview.style.maxWidth = "169px";
+    imgPreview.style.maxHeight = "169px";
+    imgPreview.style.marginTop = "0px";
+    imgPreview.src = URL.createObjectURL(inputFile.files[0]);
+    imgPreview.alt = inputFile.files[0].name;
+    imgPreview.id  = "imgPreview" 
+
+    hideElementsForImgPreview(hiddenElements, imgPreview);
+
+    document.querySelector(".addWork-input-file-container").appendChild(imgPreview);
+};
+
+/**
+ * This function POST a new work in DB.
+ * Sets the reboot of the gallery.
+ * Sets the elements for previewing.
+ * Sets the validation message.
+ * 
+ * [use displayProjectsGallery()]
+ * [use hideElementsForImgPreview()]
+ * [use sendValidationMessage()]
+ * 
+ * @param {object} formData 
+ */
+async function postWork(formData) {
+    const token = window.localStorage.getItem("token");
+    // let messageContainer = document.querySelector("error-container")
+    let data;
+
+    try {
+        const response = await fetch("http://localhost:5678/api/works",{
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData
+
+        }).then(data = await getData())
+        //   .then(response => console.log(response))
+          .then(displayProjectsGallery(data))
+          .then(hideElementsForImgPreview(document.querySelectorAll(".invisible"), document.getElementById("imgPreview")))
+          .then(sendValidationMessage(form))
+          .then(setTimeout(removeValidationMessage, 5000))
+          .then(form.reset());
+          
+        if (response.status === 400) {
+            throw new Error("400, Bad Request")
+        }
+        if (response.status === 404) {
+            throw new Error("401, Unauthorized")
+        }
+        if (response.status === 500) {
+            throw new Error("500, Internal server error")
+        }
+
+    } catch (error) {
+        console.log("Error: ", error);
+    }
+};
+
+/**
+ * This function monitors changes to the inputs to manage the display 
+ * of the preview and initiates input validation. If validated, launch 
+ * the postWork() function.
+ * 
+ * [use inputFileValidation()]
+ * [use inputTextValidation()]
+ * [use inputSelectValidation()]
+ * [use postWork()]
+ * 
+ * @param {object} form 
+ */
+async function submitAddWorkFormValidation(form) {
+    let inputFile = document.getElementById("file");
+    let inputTitle = document.getElementById("title");
+    let inputCategories = document.getElementById("categories");
+    let inputGroup = [inputFile, inputTitle, inputCategories];
+
+    inputFile.addEventListener("change", () => {
+        updatePreviewImage(inputFile);
+    })
+
+    inputGroup.map((element) => element.addEventListener("change", () => {
+        document.querySelector(".add-photo-btn").classList.remove("disabled");
+    }))
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        inputFileValidation(inputFile);
+        inputTextValidation(inputTitle.value);
+        inputSelectValidation(inputCategories.value);
+
+        if (inputFileValidation(inputFile) && inputTextValidation(inputTitle.value) && inputSelectValidation(inputCategories.value)) {
+            postWork(formData);
+        }
+    })
+};
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -424,11 +681,11 @@ function editModeInterfaceInit() {
     toggleEditionHeaderDisplay();
     toggleFilterButtonsDisplay();
     toggleEditorButtonDisplay();
-}
+};
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 if (window.localStorage.getItem("token")) {
-    console.log("VOUS ETES CONNECTE")
+    console.log("VOUS ETES CONNECTE(E)")
     editModeInterfaceInit();
     openModal();
     closeModal();
