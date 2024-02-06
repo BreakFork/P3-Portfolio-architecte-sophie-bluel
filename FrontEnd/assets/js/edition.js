@@ -109,7 +109,11 @@ async function displayEditorGallery() {
         modalGalleryContent.appendChild(galleryEditorElement);
 
         deleteButton.addEventListener("click", (event) => {
-            console.log(event.target.parentNode.id)
+            // console.log(event.target.parentNode.id)
+            let workId;
+            event.target.id === "" ? workId = event.target.parentNode.id : null;
+            event.target.id !== "" ? workId = event.target.id            : null;
+            deleteWorks(workId).then(workId = "");
         });
     };
     addWorkButtonFunctionality();
@@ -667,6 +671,40 @@ async function submitAddWorkFormValidation(form) {
             postWork(formData);
         }
     })
+};
+//////////////////////////////////////
+// --- Delete Functionality :
+
+/**
+ * This function allows the user to delete works in DB.
+ * 
+ * @param {object} workId 
+ */
+async function deleteWorks(workId) {
+    const token = window.localStorage.getItem("token");
+
+    try {
+        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json",
+                       "Authorization": `Bearer ${token}`
+                     }
+                     
+        })
+          .then(modalGalleryContent.innerHTML = "")
+          .then(await displayEditorGallery())
+          .then(await displayProjectsGallery())
+          
+        if (response.status === 404) {
+            throw new Error("401, Unauthorized")
+        }
+        if (response.status === 500) {
+            throw new Error("500, Internal servor error")
+        }
+
+    } catch (error) {
+        console.log("Error: ", error);
+    }
 };
 
 //////////////////////////////////////////////////////////////////////////
