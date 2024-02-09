@@ -180,6 +180,11 @@ function openModal() {
         modalGalleryContent.innerHTML = "";
         displayEditorGallery();
     })
+
+    document.querySelector(".modal").addEventListener("click", () => {
+        DOM_body.classList.remove("body-modal-mode");
+    })
+
     modaleContent.addEventListener("click", (event) => {
         event.stopPropagation();
     })
