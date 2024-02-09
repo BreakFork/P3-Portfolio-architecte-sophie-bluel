@@ -697,8 +697,8 @@ async function deleteWorks(workId) {
                      
         })
           .then(modalGalleryContent.innerHTML = "")
-          .then(displayEditorGallery())
-          .then(displayProjectsGallery())
+          .then(await displayEditorGallery())
+          .then(await displayProjectsGallery())
           
         if (response.status === 404) {
             throw new Error("401, Unauthorized")
