@@ -604,7 +604,6 @@ function updatePreviewImage(inputFile) {
  */
 async function postWork(formData) {
     const token = window.localStorage.getItem("token");
-    let data;
 
     try {
         const response = await fetch("http://localhost:5678/api/works",{
@@ -615,7 +614,7 @@ async function postWork(formData) {
             body: formData
 
         })
-          .then(data = await getData())
+          .then(data = await getData("works"))
         //   .then(response => console.log(response))
           .then(displayProjectsGallery())
           .then(hideElementsForImgPreview(document.querySelectorAll(".invisible"), document.getElementById("imgPreview")))
