@@ -694,7 +694,7 @@ async function deleteWorks(workId) {
                        "Authorization": `Bearer ${token}`
                      }
                      
-        })
+        }).then(data = await getData("works"))
           .then(modalGalleryContent.innerHTML = "")
           .then(await displayEditorGallery())
           .then(await displayProjectsGallery())
