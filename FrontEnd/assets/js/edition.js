@@ -359,7 +359,7 @@ async function createInputSelect(element) {
     element.appendChild(inputSelectLabel);
     element.appendChild(inputSelect);
 
-    data = await getData("categories"); console.log("FROM INPUT : " + JSON.stringify(data))
+    data = await getData("categories"); //console.log("FROM INPUT : " + JSON.stringify(data))
 
     for (const category of data) {
         let option = document.createElement("option");
@@ -599,7 +599,6 @@ function updatePreviewImage(inputFile) {
  */
 async function postWork(formData) {
     const token = window.localStorage.getItem("token");
-    // let messageContainer = document.querySelector("error-container")
     let data;
 
     try {
@@ -610,9 +609,10 @@ async function postWork(formData) {
             },
             body: formData
 
-        }).then(data = await getData())
+        })
+          .then(data = await getData())
         //   .then(response => console.log(response))
-          .then(displayProjectsGallery(data))
+          .then(displayProjectsGallery())
           .then(hideElementsForImgPreview(document.querySelectorAll(".invisible"), document.getElementById("imgPreview")))
           .then(sendValidationMessage(form))
           .then(setTimeout(removeValidationMessage, 5000))
@@ -692,8 +692,8 @@ async function deleteWorks(workId) {
                      
         })
           .then(modalGalleryContent.innerHTML = "")
-          .then(await displayEditorGallery())
-          .then(await displayProjectsGallery())
+          .then(displayEditorGallery())
+          .then(displayProjectsGallery())
           
         if (response.status === 404) {
             throw new Error("401, Unauthorized")
